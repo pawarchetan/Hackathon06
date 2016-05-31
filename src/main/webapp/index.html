@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+  <title>Clairvoyant - SDS</title>
+
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/target-admin.css">
+  <link href="css/bootstrap-theme.min.css" rel="stylesheet" media="screen"/>
+  <link href="css/angular-growl.min.css" rel="stylesheet" media="screen"/>
+
+
+  <link rel="stylesheet" href="css/custom.css">
+
+</head>
+<body ng-app="sdsApp" ng-controller = "mainController">
+
+  <div class="navbar">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <i class="fa fa-cogs"></i>
+      </button>
+
+      <a class="navbar-brand navbar-brand-image" href="index.html">
+        <img src="img/clairvoyant.png" class="sds-image" style="width:190px;margin-top:20px;" alt="Site Logo">
+      </a>
+
+    </div>
+    <div class="navbar-collapse collapse">
+      <div class="pull-right">
+          <h3 class="sds-title">Sensitive Data Search</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="mainbar">
+  <div class="container">
+    <button type="button" class="btn mainbar-toggle" data-toggle="collapse" data-target=".mainbar-collapse">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="mainbar-collapse collapse">
+
+        <form id="validate-basic" action="#" style="margin-top:15px;"  class="form parsley-form">
+
+          <div class="col-md-12">
+
+            <div class="col-md-2">
+              <input type="text" id="username" ng-model="searchForm.username" name="username" class="form-control" placeholder="Username">
+            </div>
+
+            <div class="col-md-2">
+              <input type="text" id="password" ng-model="searchForm.password" name="password" class="form-control" placeholder="Password">
+            </div>
+
+            <div class="col-md-4 text-left checkbox-div">
+              <input type="checkbox" name="checkbox-1" ng-model="searchForm.ssn" class="custom-checkbox" data-mincheck="2">
+              <span class="white-text">SSN</span>
+
+              <input type="checkbox" name="checkbox-1" ng-model="searchForm.cc" class="custom-checkbox" data-mincheck="2">
+              <span class="white-text">Credit Card</span>
+
+              <input type="checkbox" name="checkbox-1" ng-model="searchForm.email" class="custom-checkbox" data-mincheck="2">
+              <span class="white-text">Email</span>
+            </div>
+
+          </div>
+
+
+          <div class="col-md-12" style="margin-top:15px;">
+            <div class="col-md-4">
+              <input type="text" id="server" ng-model="searchForm.serverUrl" name="serverUrl" class="form-control" placeholder="Server URL">
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <select id="validateSelect" ng-model="searchForm.databaseType" name="databaseType" class="form-control" data-required="true">
+                  <option value="">Database Type</option>
+                  <option value="com.mysql.jdbc.Driver">MySQL</option>
+                  <option value="2">Oracle</option>
+                  <option value="3">MongoDB</option>
+                  <option value="net.sourceforge.jtds.jdbc.Driver">SQL Server</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group">
+                <select id="percentage" ng-model="searchForm.percentage" name="percentage" class="form-control" data-required="true">
+                  <option value="">Percentage</option>
+                  <option value="10">10%</option>
+                  <option value="20">20%</option>
+                  <option value="30">30%</option>
+                  <option value="40">40%</option>
+                  <option value="50">50%</option>
+                  <option value="60">60%</option>
+                  <option value="70">70%</option>
+                  <option value="80">80%</option>
+                  <option value="90">90%</option>
+                  <option value="100">100%</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-1">
+              <button type="button" ng-click="searchCriteria()" class="btn btn-warning pull-left">Search Records</button>
+            </div>
+
+          </div>
+        </form>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="content">
+    <div class="content-container">
+
+        <ng-view></ng-view>
+
+    </div>
+  </div>
+</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript" src="js/angular.js"></script>
+  <!--<script type="text/javascript" src="js/bootstrap-growl.js"></script>-->
+  <script type="text/javascript" src="js/angular-route.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="controllers/mainController.js"></script>
+  <script type="text/javascript" src="directives/directives.js"></script>
+  <script type="text/javascript" src="services/services.js"></script>
+
+</body>
+</html>
