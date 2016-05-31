@@ -6,18 +6,19 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
 import java.util.Properties;
 
 @Service
 @Log4j2
 public class LoadSessionFactoryServiceImpl implements LoadSessionFactoryService {
-    private static final String PACKAGE_TO_SCAN = "com.clairvoyant.hackathon.model";
+    private static final String PACKAGE_TO_SCAN = "com.clairvoyant.hackathon.model";  // Where is model ?
     private static final String HIBERNATE_CONNECTION_URL = "hibernate.connection.url";
     private static final String HIBERNATE_CONNECTION_USERNAME = "hibernate.connection.username";
     private static final String HIBERNATE_CONNECTION_PASSWORD = "hibernate.connection.password";
     private static final String HIBERNATE_CONNECTION_DRIVER = "hibernate.connection.driver_class";
     private static final String JDBC_DRIVER_NAME = "jdbc.driver";
-    private static final String HIBERNATE_DIALECT = "hibernate.dialect";
+    private static final String HIBERNATE_DIALECT = "hibernate.dialect";// TO which dialect does it point ?
     private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
 
@@ -25,10 +26,10 @@ public class LoadSessionFactoryServiceImpl implements LoadSessionFactoryService 
     private Environment environment;
 
     @Override
-    public SessionFactory getSessionFactory(String connectionURL, String userName, String password) {
+    public SessionFactory getSessionFactory(String connectionURL, String userName, String password, String databaseType) {
         return new AnnotationConfiguration()
                 .addPackage(PACKAGE_TO_SCAN)
-                .addProperties(getHibernateProperties(connectionURL, userName, password))
+                .addProperties(getHibernateProperties(connectionURL, userName, password, databaseType))
                 .addAnnotatedClass(Object.class)
                 .buildSessionFactory();
     }
@@ -43,14 +44,14 @@ public class LoadSessionFactoryServiceImpl implements LoadSessionFactoryService 
 //        return dataSource;
 //    }
 
-    private Properties getHibernateProperties(String connectionURL, String username, String password) {
+    private Properties getHibernateProperties(String connectionURL, String username, String password, String databaseType) {
         log.info("Reading the Hibernate properties file........");
         Properties properties = new Properties();
         properties.setProperty(HIBERNATE_CONNECTION_URL, connectionURL);
         properties.setProperty(HIBERNATE_CONNECTION_USERNAME, username);
         properties.setProperty(HIBERNATE_CONNECTION_PASSWORD, password);
-        properties.setProperty(HIBERNATE_DIALECT, getHibernateDialect("sqlServer"));
-        properties.setProperty(HIBERNATE_CONNECTION_DRIVER, getDriverClassName("sqlServer"));
+        properties.setProperty(HIBERNATE_DIALECT, getHibernateDialect(databaseType));
+        properties.setProperty(HIBERNATE_CONNECTION_DRIVER, getDriverClassName(databaseType));
         properties.setProperty(HIBERNATE_SHOW_SQL, environment.getRequiredProperty(HIBERNATE_SHOW_SQL));
         properties.setProperty(HIBERNATE_FORMAT_SQL, environment.getRequiredProperty(HIBERNATE_FORMAT_SQL));
         return properties;

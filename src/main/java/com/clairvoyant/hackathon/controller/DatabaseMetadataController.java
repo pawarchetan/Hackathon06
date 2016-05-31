@@ -23,11 +23,13 @@ public class DatabaseMetadataController {
     @RequestMapping("/tables")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    // In the parameters  we get the details of variables mentioned in the method
     public Map<String,Map<String,Boolean>> getAllTables(@RequestBody Map< String, String > inputParameters) throws Exception {
         String connectionURL = inputParameters.get("connectionURL");
         String userName = inputParameters.get("userName");
         String password = inputParameters.get("password");
-        return databaseMetadataService.getDatabaseMetadata(connectionURL, userName, password);
+        String databaseType = inputParameters.get("databaseType");
+        return databaseMetadataService.getDatabaseMetadata(connectionURL, userName, password, databaseType);
     }
 
     @GET

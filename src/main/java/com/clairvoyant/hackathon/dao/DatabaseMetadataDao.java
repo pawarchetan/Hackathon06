@@ -7,6 +7,6 @@ import java.sql.ResultSet;
 
 @Repository
 public interface DatabaseMetadataDao {
-    DatabaseMetaData getDatabaseMetadata(String connectionURL, String userName, String password);
+    DatabaseMetaData getDatabaseMetadata(String connectionURL, String userName, String password, String databaseType);
     ResultSet getTableMetaData(DatabaseMetaData databaseMetaData);
 }

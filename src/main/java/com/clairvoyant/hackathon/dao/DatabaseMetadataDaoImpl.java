@@ -21,9 +21,14 @@ public class DatabaseMetadataDaoImpl implements DatabaseMetadataDao {
     @Autowired
     LoadSessionFactoryService loadSessionFactoryService;
 
+    /**
+     * DatabaseMetaData interface provides methods to get meta data of a database such as database product name,
+     * database product version, driver name, name of total number of tables, name of total number of views etc.
+     * REFERENCES :- https://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html
+     */
     @Override
-    public DatabaseMetaData getDatabaseMetadata(String connectionURL, String userName, String password) {
-        SessionFactory sessionFactory = loadSessionFactoryService.getSessionFactory(connectionURL, userName, password);
+    public DatabaseMetaData getDatabaseMetadata(String connectionURL, String userName, String password, String databaseType) {
+        SessionFactory sessionFactory = loadSessionFactoryService.getSessionFactory(connectionURL, userName, password, databaseType);
         SessionImpl sessionImpl = (SessionImpl) sessionFactory.openSession();
         try {
             Connection connection = sessionImpl.connection();
@@ -35,6 +40,11 @@ public class DatabaseMetadataDaoImpl implements DatabaseMetadataDao {
         return null;
     }
 
+    /**
+     * getTables(String catalog, String schemaPattern, String tableNamePattern, String[] types)
+     * Retrieves a description of the tables available in the given catalog.
+     * REFERENCES :- https://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html
+     */
     @Override
     public ResultSet getTableMetaData(DatabaseMetaData databaseMetaData) {
         try {

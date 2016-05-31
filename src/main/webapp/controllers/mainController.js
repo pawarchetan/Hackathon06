@@ -1,6 +1,6 @@
-var mainApp = angular.module("sdsApp.mainController", ['ngRoute']);
+var mainApp = angular.module("sdsApp.mainController", ['ngRoute', 'angular-growl']);
 
-mainApp.controller('mainController',['$scope','getRecordsFromServer', function($scope, getRecordsFromServer) {
+mainApp.controller('mainController', ['$scope', 'getRecordsFromServer', 'growl', function ($scope, getRecordsFromServer, growl) {
 
     var currentIndex = 0;
     var todayDate = new Date();
@@ -8,7 +8,9 @@ mainApp.controller('mainController',['$scope','getRecordsFromServer', function($
     $scope.searchForm = {};
     $scope.visibilityMode = "view";
 
-
+    showError = function () {
+        growl.error('Please check the credentials and try again.', {title: 'Error while fetching records!'});
+    }
     $scope.searchCriteria = function() {
 
         if($scope.searchForm.serverUrl) {
@@ -68,7 +70,8 @@ mainApp.controller('mainController',['$scope','getRecordsFromServer', function($
         var  params = {
             "connectionURL": $scope.searchForm.serverUrl,
             "userName": $scope.searchForm.username,
-            "password": $scope.searchForm.password
+            "password": $scope.searchForm.password,
+            "databaseType": $scope.searchForm.databaseType
         }
 
         console.log(params);
@@ -84,6 +87,11 @@ mainApp.controller('mainController',['$scope','getRecordsFromServer', function($
                   //angular.forEach(data, function (value) {
                   //    $scope.records.push(value);
                   //});
+                })
+
+                .error(function (data) {
+                    showError();
+                    $scope.responseObject = "";
              });
         
 

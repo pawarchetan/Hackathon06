@@ -1,4 +1,4 @@
-angular.module("sdsApp", ['ngRoute','sdsApp.mainController','sdsApp.when_Scroll_Ends','sdsApp.services'])
+angular.module("sdsApp", ['ngRoute', 'sdsApp.mainController', 'sdsApp.when_Scroll_Ends', 'sdsApp.services', 'angular-growl'])
 
     .config(function($routeProvider) {
     $routeProvider
